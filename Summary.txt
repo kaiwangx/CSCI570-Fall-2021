@@ -1,0 +1,10 @@
+Contributions of each student in the group.
+    Kai Wang, id 9646253699: All the work
+
+Comments on why the efficient and basic versions have different memory and time plots.
+    The efficient version has a smaller memory usage since we only need to keep the last row of the m*n table (m, n
+    stands for the size of two sequence). Here in my implementation, the size of allocated arr is in size of Theta(n),
+    whereas the size needed by the basic version is Theta(m*n)
+
+    The efficient version needs more cpu time since it has a recursive divide and conquer algorithm used to find the
+    actually alignment. We have shown in class that the complexity of the efficient version is O(2*m*n).

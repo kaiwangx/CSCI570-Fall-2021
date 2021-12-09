@@ -60,8 +60,8 @@ def sequence_alignment_basic(s: str, t: str):
             table[i][j] = min(BETA + table[i][j - 1], BETA + table[i - 1][j],
                               ALPHA[s[i - 1]][t[j - 1]] + table[i - 1][j - 1])
 
-    r1, r2 = backtrack(s, t, table)
-    return table[m][n], r1, r2
+    _s, _t = backtrack(s, t, table)
+    return table[m][n], _s, _t
 
 
 if __name__ == '__main__':

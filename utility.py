@@ -54,33 +54,41 @@ def find_cost(s: str, t: str) -> int:
     return sum(BETA if s[i] == '_' or t[i] == '_' else ALPHA[s[i]][t[i]] for i in range(len(s)))
 
 
+def driver(func, s, t):
+    """
+    Driver function for sequence alignment basic/efficient for given sequence s and t
+    """
+    tracemalloc.start()
+    start = timeit.default_timer()
+    cost, _s, _t = func(s, t)
+    time = timeit.default_timer() - start
+    space = tracemalloc.get_traced_memory()[1]
+    tracemalloc.clear_traces()
+    try:
+        assert find_cost(_s, _t) == cost
+    except AssertionError:
+        print("Wrong alignment")
+    return cost, _s, _t, round(time, 3), space // 1024
+
+
 def write(func, arg):
     """
     Format and write result return by the func (basic/efficient)
     """
+    s, t = parse(arg)
+    cost, _s, _t, time, space = driver(func, s, t)
     with open('output.txt', "w") as f:
-        s, t = parse(arg)
-        tracemalloc.start()
-        start = timeit.default_timer()
-        cost, r1, r2 = func(s, t)
-        f.write("{} {}\n".format(r1[:50], r1[-50:]))
-        f.write("{} {}\n".format(r2[:50], r2[-50:]))
-        f.write("{}\n{}\n{}\n".format(str(cost),
-                                      str(round(timeit.default_timer() - start, 3)),
-                                      str(tracemalloc.get_traced_memory()[1] // 1024)))
+        f.write("{} {}\n".format(_s[:50], _s[-50:]))
+        f.write("{} {}\n".format(_t[:50], _t[-50:]))
+        f.write("{}\n{}\n{}\n".format(str(cost), str(time), str(space)))
 
 
 def get_time_and_space(func, s, t):
     """
     Return the time and space used by func
     """
-    tracemalloc.start()
-    start = timeit.default_timer()
-    func(s, t)
-    time = timeit.default_timer() - start
-    space = tracemalloc.get_traced_memory()[1]
-    tracemalloc.clear_traces()
-    return round(time, 3), space // 1024
+    _, _, _, time, space = driver(func, s, t)
+    return time, space
 
 
 def random_generator():
