@@ -1,1 +1,2 @@
-python3 sequence_alignment_efficient.py input.txt
+#! /bin/bashy
+python3 sequence_alignment_basic.py input.txt
