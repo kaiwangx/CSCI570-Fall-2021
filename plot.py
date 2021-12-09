@@ -4,15 +4,15 @@ from utility import random_generator, get_time_and_space
 import matplotlib.pyplot as plt
 
 
-def plot(n):
+def plot(num_of_point, n, save=False):
     """
     Plot graph of
         a) problem size n vs memory used
         b) problem size n vs cpu time
     """
     time_base, space_base, time_efficient, space_efficient, problem_size = [], [], [], [], []
-    ss, ts = sorted([random_generator() for _ in range(n)], key=lambda x: len(x)), \
-             sorted([random_generator() for _ in range(n)], key=lambda x: len(x))
+    ss = sorted([random_generator(n) for _ in range(num_of_point)], key=lambda x: len(x))
+    ts = sorted([random_generator(n) for _ in range(num_of_point)], key=lambda x: len(x))
     for i in range(n):
         s, t = ss[i], ts[i]
         problem_size.append(len(s) + len(t))
@@ -29,7 +29,8 @@ def plot(n):
     plt.ylabel('seconds')
     plt.title('CPU Plot')
     plt.legend()
-    plt.savefig("CPUPlot.png")
+    if save:
+        plt.savefig("CPUPlot.png")
     plt.show()
 
     plt.plot(problem_size, space_base, label="base")
@@ -38,9 +39,10 @@ def plot(n):
     plt.ylabel('kib')
     plt.title('Memory Plot')
     plt.legend()
-    plt.savefig("MemoryPlot.png")
+    if save:
+        plt.savefig("MemoryPlot.png")
     plt.show()
 
 
 if __name__ == '__main__':
-    plot(15)
+    plot(15, 10, save=False)

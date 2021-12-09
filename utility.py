@@ -12,16 +12,9 @@ ALPHA = {'A': {'A': 0, 'C': 110, 'G': 48, 'T': 94},
 BETA = 30
 
 
-def string_generator(base: str, indices: List[int]) -> str:
+def str_generator(base: str, indices: List[int]) -> str:
     """
     Generate the sequence base on the base string and indices.
-
-    Args:
-        base:  a string
-        indices: a list of int
-
-    Returns:
-        The generated sequence
     """
     return str(reduce(lambda prev, idx: prev[:idx + 1] + prev + prev[idx + 1:], indices, base))
 
@@ -43,8 +36,7 @@ def parse(filename: str) -> (str, str):
     with open(filename, 'r') as file:
         lines = list(map(lambda line: line.rstrip(), file.readlines()))
     [b1, b2] = list(filter(lambda idx: not lines[idx].isnumeric(), range(len(lines))))
-    return string_generator(lines[b1], to_int_array(lines[1:b2])), string_generator(lines[b2],
-                                                                                    to_int_array(lines[b2 + 1:]))
+    return str_generator(lines[b1], to_int_array(lines[1:b2])), str_generator(lines[b2], to_int_array(lines[b2+1:]))
 
 
 def find_cost(s: str, t: str) -> int:
@@ -91,10 +83,10 @@ def get_time_and_space(func, s, t):
     return time, space
 
 
-def random_generator():
+def random_generator(n):
     """
-    Randomly generate a sequence of A, C, T, G of length within 1024
+    Randomly generate a sequence of A, C, T, G of length within 2**n
     """
     base = ['A', 'C', 'T', 'G']
     random.shuffle(base)
-    return string_generator(''.join(base), [random.randint(1, 4 * 2 ** i) for i in range(random.randint(0, 8))])
+    return str_generator(''.join(base), [random.randint(1, 4 * 2 ** i) for i in range(random.randint(0, n-2))])
