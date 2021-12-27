@@ -7,3 +7,5 @@ Problem statement: Give two string, A and B, find the minimum cost of sequence a
 The basic dp version of sequence alignment algorithm (see my post [Dynamic Programming Revisit](https://kaiwang.co/2021/11/04/dynamic-programming-revisit/)) is capable to find the numerical answer in O(m*n) time, but in order to find the actually assignment/alignment, it need O(m*n) space.
 
 The memory efficient version of sequence alignment used a combination of divide and conquer and dp. Used O(m*n) time but only O(m + n) space.
+
+Score:100/100
